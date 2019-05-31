@@ -16,14 +16,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        llStart.setOnClickListener({
+        llStart.setOnClickListener {
             launchActivity<IdentifyRfidActivity>()
-        })
-        llQRCode.setOnClickListener({
+        }
+        llQRCode.setOnClickListener {
            val integrador =  IntentIntegrator(this)
             integrador.setCameraId(1)
             integrador.initiateScan()
-        })
+        }
     }
 
     override  fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

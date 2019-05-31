@@ -6,8 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.graphics.Color
-import android.graphics.PorterDuff
+import android.graphics.*
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
@@ -36,6 +35,12 @@ import com.barzinga.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.activity_products.*
 import kotlinx.android.synthetic.main.view_bottom_bar.*
 import kotlinx.android.synthetic.main.view_user_info.*
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.ColorMatrix
+import android.graphics.Bitmap
+import android.R
+
+
 
 
 class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedListener, ProductListViewModel.ProductsListener {
@@ -62,9 +67,9 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
 
         getUser()
 
-        llFinishOrder.setOnClickListener({
+        llFinishOrder.setOnClickListener {
             openCheckout()
-        })
+        }
 
     }
 
@@ -196,6 +201,33 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         products_list.scrollToPosition(0)
         invalidateOptionsMenu()
         hideKeyboard()
+    }
+
+    override fun onPredictionRequested(bitmap: Bitmap) {
+        val scaledBitmap = Bitmap.createScaledBitmap(
+            bitmap,
+            50,
+            50,
+            false
+        )
+        
+    }
+
+    fun toGrayscale(bmpOriginal: Bitmap): Bitmap {
+        val width: Int
+        val height: Int
+        height = bmpOriginal.height
+        width = bmpOriginal.width
+
+        val bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val c = Canvas(bmpGrayscale)
+        val paint = Paint()
+        val cm = ColorMatrix()
+        cm.setSaturation(0f)
+        val f = ColorMatrixColorFilter(cm)
+        paint.colorFilter = f
+        c.drawBitmap(bmpOriginal, 0f, 0f, paint)
+        return bmpGrayscale
     }
 
     fun hideKeyboard() {

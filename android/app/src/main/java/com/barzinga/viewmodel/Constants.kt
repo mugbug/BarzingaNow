@@ -5,6 +5,7 @@ package com.barzinga.viewmodel
  */
 object Constants{
     val BASE_URL: String = "http://barzinganow.appspot.com/api/"
+    val BASE_ML_URL: String = "http://barzinganow.appspot.com/api/" // TODO: Update base url
     val BASE_RFID_URL: String = "http://172.16.122.162:8765" //161 for BZG 1 and 162 for BZG 2
     val USER_EXTRA: String = "USER_EXTRA"
     val TRANSACTION_EXTRA: String = "TRANSACTION_EXTRA"

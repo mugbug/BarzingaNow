@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/lvItems"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
+        android:layout_height="wrap_content"
         android:paddingTop="@dimen/hecto_margin"
         android:listSelector="@color/colorPrimary"
         android:drawSelectorOnTop="false"
         android:choiceMode="singleChoice"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true">
-    </ListView>
+        android:layout_weight="1"/>
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/scannedPhoto"
+        android:layout_width="150dp"
+        android:layout_height="150dp" />
+
+    <Button
+        android:id="@+id/btnScanProduct"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="SCAN PRODUCT"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

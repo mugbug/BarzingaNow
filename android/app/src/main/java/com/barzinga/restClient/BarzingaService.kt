@@ -37,7 +37,7 @@ interface BarzingaService {
         fun create(): BarzingaService {
 
             val logging = HttpLoggingInterceptor()
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+            logging.level = HttpLoggingInterceptor.Level.BODY
 
             val httpClient = OkHttpClient.Builder()
 
@@ -50,7 +50,7 @@ interface BarzingaService {
                     .baseUrl(Constants.BASE_URL)
                     .build()
 
-            return retrofit.create(BarzingaService::class.java);
+            return retrofit.create(BarzingaService::class.java)
         }
     }
 }

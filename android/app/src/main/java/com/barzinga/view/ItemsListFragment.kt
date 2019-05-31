@@ -11,19 +11,23 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.barzinga.R
 import com.barzinga.model.Item
+import kotlinx.android.synthetic.main.fragment_items_list.*
 import java.text.FieldPosition
+import android.content.Intent
+import android.graphics.Bitmap
+
 
 /**
  * Created by diego.santos on 18/10/17.
  */
 class ItemsListFragment : Fragment() {
     private var adapterItems: ArrayAdapter<Item>? = null
-    private var lvItems: ListView? = null
-
     private var listener: OnItemSelectedListener? = null
+
 
     interface OnItemSelectedListener {
         fun onItemSelected(i: Item)
+        fun onPredictionRequested(bitmap: Bitmap)
     }
 
     override fun onAttach(activity: Activity?) {
@@ -42,17 +46,23 @@ class ItemsListFragment : Fragment() {
 
         val items = arguments.getSerializable("items") as ArrayList<Item>
 
-        adapterItems = ArrayAdapter(activity,
-                R.layout.item_category, items)
+        adapterItems = ArrayAdapter(activity, R.layout.item_category, items)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate view
-        val view = inflater!!.inflate(com.barzinga.R.layout.fragment_items_list, container,
+        val view = inflater!!.inflate(R.layout.fragment_items_list, container,
                 false)
+
+
+        return view
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         // Bind adapter to ListView
-        lvItems = view.findViewById<View>(com.barzinga.R.id.lvItems) as ListView
         lvItems!!.adapter = adapterItems
         lvItems!!.onItemClickListener = AdapterView.OnItemClickListener { adapterView, item, position, rowId ->
             // Retrieve item based on position
@@ -61,13 +71,26 @@ class ItemsListFragment : Fragment() {
             listener!!.onItemSelected(i)
         }
 
-        lvItems!!.post({
+        lvItems!!.post {
             lvItems!!.setItemChecked(0, true)
-        })
+        }
+
+        btnScanProduct.setOnClickListener {
+            val cameraIntent =
+                Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+//            cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1)
+            startActivityForResult(cameraIntent, 1000)
+        }
 
         setActivateOnItemClick(true)
+    }
 
-        return view
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1000 && resultCode == Activity.RESULT_OK) {
+            val bitmap = data?.extras?.get("data") as Bitmap
+            listener?.onPredictionRequested(bitmap)
+        }
     }
 
     /**

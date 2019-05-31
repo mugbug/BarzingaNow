@@ -120,7 +120,7 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
             animation2.duration = 500
             animation2.fillAfter = true
 
-            binding.increaseQtde.setOnClickListener({
+            binding.increaseQtde.setOnClickListener {
 
                 binding.increaseQtde.isEnabled = false
 
@@ -129,9 +129,9 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
 
                     val context = binding.root.context
                     if (context is ProductsActivity) {
-                        context.runOnUiThread({
+                        context.runOnUiThread {
                             binding.increaseQtde.isEnabled = true
-                        })
+                        }
                     }
                 }, 500)
 
@@ -140,7 +140,7 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
                 mProducts[position].quantityOrdered = mProducts[position].quantityOrdered?.plus(1)
 
                 mListener?.onProductsQuantityChanged()
-            })
+            }
         }
     }
 
