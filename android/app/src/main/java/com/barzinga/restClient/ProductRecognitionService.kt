@@ -6,7 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 interface ProductRecognitionService {
 
-    @retrofit2.http.POST("predict/")
+    @retrofit2.http.POST("predict")
     fun recogniseProduct(@retrofit2.http.Body parameter: String): io.reactivex.Observable<String>
 
     companion object Factory {

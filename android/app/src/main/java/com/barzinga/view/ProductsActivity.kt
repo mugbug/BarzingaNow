@@ -38,7 +38,6 @@ import kotlinx.android.synthetic.main.view_user_info.*
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.ColorMatrix
 import android.graphics.Bitmap
-import android.R
 
 
 
@@ -204,20 +203,40 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
     }
 
     override fun onPredictionRequested(bitmap: Bitmap) {
+
+        viewModel.predict(bitmap)
+    }
+
+    fun Bitmap.forPrediction(): String {
         val scaledBitmap = Bitmap.createScaledBitmap(
-            bitmap,
+            this,
             50,
             50,
             false
         )
+
+        (0..scaledBitmap.height).forEach {  verticalPosition ->
+            (0..scaledBitmap.width).forEach {   horizontalPosition ->
+                val colour = scaledBitmap.getPixel(horizontalPosition, verticalPosition)
+
+            }
+        }
+//        val grayscaleBitmap = scaledBitmap.toGrayscale()
         
+        // percorrer imagem
+        // pegar cada pixel
+        // pegar compoentes rgb
+        // converter rgb pra base 65535
+
+        // concatenar todos separados por virgula
+        return ""
     }
 
-    fun toGrayscale(bmpOriginal: Bitmap): Bitmap {
+    fun Bitmap.toGrayscale(): Bitmap {
         val width: Int
         val height: Int
-        height = bmpOriginal.height
-        width = bmpOriginal.width
+        height = this.height
+        width = this.width
 
         val bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val c = Canvas(bmpGrayscale)
@@ -226,7 +245,7 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         cm.setSaturation(0f)
         val f = ColorMatrixColorFilter(cm)
         paint.colorFilter = f
-        c.drawBitmap(bmpOriginal, 0f, 0f, paint)
+        c.drawBitmap(this, 0f, 0f, paint)
         return bmpGrayscale
     }
 

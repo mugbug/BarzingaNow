@@ -8,7 +8,7 @@ import retrofit2.Response
 /**
  * Created by diego.santos on 04/10/17.
  */
-class ProductsRepository(val apiService: BarzingaService) {
+class ProductsRepository(val apiService: BarzingaService, val predictionService: ProductRecognitionService) {
 
     fun listProducts(): io.reactivex.Observable<ArrayList<Product>> {
         return apiService.listProducts()
@@ -18,4 +18,7 @@ class ProductsRepository(val apiService: BarzingaService) {
         return apiService.buyProducts(transactionParameter)
     }
 
+    fun predict(imageInfo: String): io.reactivex.Observable<String> {
+        return predictionService.recogniseProduct(imageInfo)
+    }
 }

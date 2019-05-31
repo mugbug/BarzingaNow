@@ -2,6 +2,7 @@ package com.barzinga.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.graphics.Bitmap
 import com.barzinga.model.Product
 import com.barzinga.restClient.RepositoryProvider
 
@@ -33,6 +34,29 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
                                 listener.onProductsListError()
 //                                updateUi(null)
                         })
+        )
+
+    }
+
+    fun predict(bitmap: Bitmap) {
+        val compositeDisposable: CompositeDisposable = CompositeDisposable()
+        val repository = RepositoryProvider.provideProductsRepository()
+
+
+        val imageString = ""
+
+        compositeDisposable.add(
+            repository.predict(imageString)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe ({
+                        result ->
+                    print(result)
+//                                updateUi(result)
+                }, { error ->
+                    error.printStackTrace()
+//                                updateUi(null)
+                })
         )
 
     }

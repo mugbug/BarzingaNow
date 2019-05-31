@@ -6,10 +6,11 @@ package com.barzinga.restClient
 object RepositoryProvider {
 
     fun provideProductsRepository(): ProductsRepository {
-        return ProductsRepository(BarzingaService.Factory.create())
+        return ProductsRepository(BarzingaService.Factory.create(), ProductRecognitionService.create())
     }
 
     fun provideUserRepository(): UserRepository {
         return UserRepository(BarzingaService.Factory.create(), RfidService.Factory.create())
     }
+
 }
