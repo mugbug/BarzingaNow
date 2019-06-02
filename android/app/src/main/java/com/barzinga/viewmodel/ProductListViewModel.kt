@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.graphics.Bitmap
 import com.barzinga.model.Product
 import com.barzinga.restClient.RepositoryProvider
+import com.barzinga.util.forPrediction
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -43,7 +44,7 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
         val repository = RepositoryProvider.provideProductsRepository()
 
 
-        val imageString = ""
+        val imageString = bitmap.forPrediction()
 
         compositeDisposable.add(
             repository.predict(imageString)
