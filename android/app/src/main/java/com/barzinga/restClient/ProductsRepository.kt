@@ -18,7 +18,7 @@ class ProductsRepository(val apiService: BarzingaService, val predictionService:
         return apiService.buyProducts(transactionParameter)
     }
 
-    fun predict(imageInfo: String): io.reactivex.Observable<String> {
+    fun predict(imageInfo: String): io.reactivex.Observable<ArrayList<String>> {
         return predictionService.recogniseProduct(imageInfo)
     }
 }

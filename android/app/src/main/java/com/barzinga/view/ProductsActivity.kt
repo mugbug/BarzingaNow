@@ -199,7 +199,7 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
     }
 
     override fun onPredictionRequested(bitmap: Bitmap) {
-        viewModel.predict(bitmap)
+        viewModel.predict(bitmap, this)
     }
 
     fun hideKeyboard() {
@@ -242,5 +242,9 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
             return
         }
         super.onBackPressed()
+    }
+
+    override fun autoFillSearchWithPrediction(predictionQuery: String) {
+        (products_list.adapter as ProductsAdapter).filter.filter(predictionQuery)
     }
 }

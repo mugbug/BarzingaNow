@@ -161,4 +161,8 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
     override fun onProductsQuantityChanged() {
         updatePrice()
     }
+
+    override fun autoFillSearchWithPrediction(predictionQuery: String) {
+
+    }
 }

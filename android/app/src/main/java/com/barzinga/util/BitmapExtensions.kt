@@ -31,7 +31,6 @@ fun Bitmap.forPrediction(): String {
         }
     }
 
-
     // concatenar todos separados por virgula
     return rgbComponents.joinToString(separator = ",")
 }

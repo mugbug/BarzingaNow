@@ -17,6 +17,8 @@ import io.reactivex.schedulers.Schedulers
  */
 class ProductListViewModel(application: Application) : AndroidViewModel(application) {
 
+    var products = mutableListOf<Product>()
+
     fun listProducts(listener: ProductsListener) {
 
         val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -28,6 +30,7 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
                         .subscribeOn(Schedulers.io())
                         .subscribe ({
                             result ->
+                                products = result
                                 listener.onProductsListGotten(result)
 //                                updateUi(result)
                         }, { error ->
@@ -39,7 +42,7 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
 
     }
 
-    fun predict(bitmap: Bitmap) {
+    fun predict(bitmap: Bitmap, listener: ProductsListener) {
         val compositeDisposable: CompositeDisposable = CompositeDisposable()
         val repository = RepositoryProvider.provideProductsRepository()
 
@@ -52,9 +55,13 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
                 .subscribeOn(Schedulers.io())
                 .subscribe ({
                         result ->
+                    val id = result.firstOrNull() ?: ""
+                    listener.autoFillSearchWithPrediction(productName(id))
                     print(result)
 //                                updateUi(result)
                 }, { error ->
+                    // TODO: Show error couldn't find product
+//                    listener.autoFillSearchWithPrediction("Paço")
                     error.printStackTrace()
 //                                updateUi(null)
                 })
@@ -62,9 +69,14 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
 
     }
 
+    fun productName(id: String): String {
+        return products.filter { id == it.id }.first().description ?: ""
+    }
+
     interface ProductsListener{
         fun onProductsListGotten(products: ArrayList<Product>)
         fun onProductsListError()
         fun onProductsQuantityChanged()
+        fun autoFillSearchWithPrediction(predictionQuery: String)
     }
 }

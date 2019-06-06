@@ -78,7 +78,7 @@ class ItemsListFragment : Fragment() {
         btnScanProduct.setOnClickListener {
             val cameraIntent =
                 Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-//            cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1)
+            cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1)
             startActivityForResult(cameraIntent, 1000)
         }
 
